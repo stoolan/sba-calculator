@@ -23,6 +23,7 @@ class Calculator
       avg_salary_across_impacted_ftes_pre_reduction: "Avg. salary across impacted FTEs pre-reduction",
       avg_salary_across_impacted_ftes_post_reduction: "Avg. salary across impacted FTEs post-reduction",
     }
+  end
 
   def maximum_loan_size
     # minimum of multiplier * eligible payroll and 10000000
@@ -32,16 +33,18 @@ class Calculator
   def payroll_eligible_for_loan_calculation
     @vars[:avg_total_monthly_payroll] - (
       (@vars[:avg_annual_comp_across_gt_100k_employees]-100000) / 12 *
-      @vars[:n_employees_making_gt_100k] + (
+       @vars[:n_employees_making_gt_100k] + (
         (@vars[:avg_monthly_comp_across_gt_8300_mo_contractors] - 8.33 ) * @vars[:n_contractors_making_gt_8300_mo]
       )
     )
   end
 
   def monthly_expenses_eligible_for_forgiveness
-    @vars[:avg_monthly_payroll_in_first_2mos_post_loan_origination] +
-    @vars[:avg_monthly_rent_or_mortgage_in_first_2mos] +
-    @vars[:avg_monthly_utilities_in_first_2mos]
+    (
+      @vars[:avg_monthly_payroll_in_first_2mos_post_loan_origination] +
+      @vars[:avg_monthly_rent_or_mortgage_in_first_2mos] +
+      @vars[:avg_monthly_utilities_in_first_2mos]
+    )
   end
 
   def expenses_eligible_for_forgiveness
@@ -90,15 +93,13 @@ class Calculator
     else
       total = 0
     end
-    if (
+    if ((
       @vars[:avg_salary_across_impacted_ftes_post_reduction] - (@vars[:avg_salary_across_impacted_ftes_pre_reduction] * 0.75)
-      ) > 0
+      ) > 0)
         total = total + 0
     else
-      total = total +
-        (
-          @vars[:avg_salary_across_impacted_ftes_post_reduction]
-           - (@vars[:avg_salary_across_impacted_ftes_pre_reduction]*.75)
+      total = total + (
+          @vars[:avg_salary_across_impacted_ftes_post_reduction] - (@vars[:avg_salary_across_impacted_ftes_pre_reduction]*.75)
          ) * (@vars[:n_salary_reductions_for_ftes_making_gt_100k] * -1)
     end
     return total
