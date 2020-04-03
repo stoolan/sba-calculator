@@ -1,12 +1,27 @@
-<div class="container">
-  <h1>Illustrative PPP Loan Calculator</h1>
-  <%= bootstrap_alert(class: 'info', text: 'DISCLAIMER: PPP loans are highly nuanced and require expert guidance to understand true loan & forgiveness amounts for your business. Below is a back-of-the-envelope calculation to get a sense of ballpark figures. More info provided at the bottom.') %>
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#" style="vertical-align:center;">
+    <%= image_tag "bonsai.png", class: "d-inline-block align-top", alt: "" %>
+  </a>
+</nav>
+<div>
+  <h1 style="text-align:center;">Illustrative PPP Loan Calculator<small class="text-muted"></small> </h1>
+  <p>
+  </p>
+  <div class="container">
+    <%= bootstrap_alert(class: 'info') do %>
+      This loan calculator to help SMBs understand how much financial support they can get as part of the Paycheck Protection Program.
+
+      PPP loans are highly nuanced and require expert guidance to understand true loan & forgiveness amounts for your business.
+
+      Below is a back-of-the-envelope calculation to get a sense of ballpark figures, with more info provided at the bottom.
+    <% end %>
+  </div>
 
   <div class="row">
     <div class="col">
       <%= bootstrap_card(title: "Inputs") do %>
         <%= form_with(url: {action: :index}, data: {remote: false}, method: "get", onchange: 'this.submit();') do |form|%>
-        <%= bootstrap_table(class: "table") do %>
+        <%= bootstrap_table(class: "table table-bordered") do %>
           <%= dollar_input(form, :avg_total_monthly_payroll) %>
           <%= integer_input(form, :n_employees_making_gt_100k) %>
           <%= dollar_input(form, :avg_annual_comp_across_gt_100k_employees) %>
@@ -17,9 +32,7 @@
           <%= dollar_input(form, :avg_of_ftes_mo_between_feb_june_of_2019) %>
           <tr>
             <td>
-              <small class="text-muted">
                 8-weeks worth of eligible expenses:
-              </small>
             </td>
             <td>
               2x
@@ -61,7 +74,7 @@
     </div>
     <div class="col">
       <%= bootstrap_card(title: "Outputs") do %>
-        <%= bootstrap_table do %>
+        <%= bootstrap_table(class: "table table-bordered") do %>
           <tr>
             <td>
               Payroll Eligible for Loan Calculation
@@ -88,7 +101,7 @@
           </tr>
           <tr>
             <td>
-              Amount Eligble for Forgiveness
+              Amount Eligble for Forgiveness <%= link_to_footnote '4' %>
             </td>
             <td>
               <%= number_to_currency @calc.amount_eligible_for_forgiveness, precision: 0 %>
@@ -104,7 +117,7 @@
           </tr>
           <tr>
             <td>
-              Monthly Loan Payments
+              Monthly Loan Payments <%= link_to_footnote '5' %>
             </td>
             <td>
               <%= number_to_currency @calc.monthly_loan_payments, precision: 0 %>
@@ -130,4 +143,53 @@
       <% end %>
     </div>
   </div>
+  <footer>
+    <%= bootstrap_alert(class: "warning") do %>
+
+    Notes:
+  <ol>
+    <li id="1">
+      Avg. total monthly payments for payroll costs incurred during the 1-year period before the date on which the loan is made
+    </li>
+    <li id="2">
+       Payroll costs don't include comp-related taxes, comp for employees living outside the US, and comp above $100k (hence rows 11-14)
+    </li>
+    <li id="3">
+       Utilities include electricity, gas, water, transportation, telephone, and internet access
+    </li>
+    <li id="4">
+       The amount of loan forgiveness calculated above is reduced if there are layoffs or wage reductions greater than 25% (hence rows 20 & 27)
+    </li>
+    <li id="5">
+       Max term of 10 years @ 4%; principal and interest can be deferred for a total of 6 months to a year after disbursement of the loan
+    </li>
+  </ol>
+
+  Additional Info:
+
+  <ul>
+    <li>
+      If you already have an SBA loan, you're eligible to get 6 months of principal and interest relief
+    </li>
+    <li>
+      New info is continuously coming in, so if there are errors or changes you'd make to the above, please contact us (emails below)
+    </li>
+  </ul>
+  <% end %>
+
+  Relevant sources:
+  <ul>
+    <li> <%= link_to "H.R.748 - CARES Act	", "https://www.congress.gov/bill/116th-congress/house-bill/748/text#toc-HCCF2DA7CBD6341059EAB97C24489743B" %> </li>
+    <li> <%= link_to "Summary guide by the US Chamber of Commerce	", "https://www.uschamber.com/sites/default/files/023595_comm_corona_virus_smallbiz_loan_final.pdf" %> </li>
+    <li> <%= link_to "PPP sample application form	", "https://www.sba.gov/document/sba-form--paycheck-protection-program-ppp-sample-application-form" %> </li>
+  </ul>
+  <%= bootstrap_alert(class: "success") do %>
+   Bonsai Group is working with lenders and others in the entrepreneurial community to help founders/business owners during this time. If you're interested in connecting, please email:
+   <%=link_to "nico@bonsaicapitalgroup.com", "mailto:nico@bonsaicapitalgroup.com"%>
+   and <%= link_to "ryan@bonsaicapitalgroup.com", "mailto:ryan@bonsaicapitalgroup.com"%>,
+   or <%= link_to "schedule a strategy session" , "https://www.bonsaicapitalgroup.com/strategy-session" %>.
+   <% end %>
+
+  <%= link_to "Developed by Sam Toolan", "mailto:stoolan@gmu.edu", class: "text-info"%>
+  </footer>
 </div>

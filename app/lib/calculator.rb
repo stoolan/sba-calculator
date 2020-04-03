@@ -19,7 +19,7 @@ class Calculator
   def self.variables
     {
       avg_total_monthly_payroll: {
-        :description => "Avg. total monthly payroll, incl. contractors (1),(2)",
+        :description => "Avg. total monthly payroll, incl. contractors (1) (2)",
         :default_value => 85000
       },
       n_employees_making_gt_100k: {
