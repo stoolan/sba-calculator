@@ -6,6 +6,7 @@ module CalculatorHelper
         desc = desc.gsub("(#{footnote})", link_to_footnote(footnote))
       end
     end
+    desc = desc.gsub('pre-', '<i>pre-</i>').gsub('post-', '<i>post-</i>')
     content_tag(:tr, class: "form-group") do
       concat(content_tag(:td) { desc.html_safe })
       concat(content_tag(:td, class: "input-group") do
