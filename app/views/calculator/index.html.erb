@@ -22,26 +22,48 @@
       <%= bootstrap_card(title: "Inputs") do %>
         <%= form_with(url: {action: :index}, data: {remote: false}, method: "get", onchange: 'this.submit();') do |form|%>
         <%= bootstrap_table(class: "table table-bordered") do %>
+        <tr>
+          <th colspan="2">
+            Ineligible Payroll
+          </th>
+        </tr>
           <%= dollar_input(form, :avg_total_monthly_payroll) %>
           <%= integer_input(form, :n_employees_making_gt_100k) %>
           <%= dollar_input(form, :avg_annual_comp_across_gt_100k_employees) %>
           <%= integer_input(form, :n_contractors_making_gt_8300_mo) %>
           <%= dollar_input(form, :avg_monthly_comp_across_gt_8300_mo_contractors) %>
+          <tr>
+            <th colspan="2">
+              Eligible Expenses
+            </th>
+          </tr>
           <%= dollar_input(form, :avg_monthly_payroll_in_first_2mos_post_loan_origination) %>
           <%= dollar_input(form, :avg_monthly_rent_or_mortgage_in_first_2mos) %>
+          <%= dollar_input(form, :avg_monthly_utilities_in_first_2mos) %>
+
           <tr>
             <td>
-                8-weeks worth of eligible expenses:
+              <small class="text-muted">
+                <strong>
+                  8-weeks worth of eligible expenses:
+                </strong>
+              </small >
             </td>
             <td>
-              2x
+              <small class="text-muted">
+                <strong>
+                  Monthly x 2
+                </strong>
+              </small >
             </td>
           </tr>
           <tr>
             <td>
-              <strong>
-                Total expenses eligible for forgiveness:
-              </strong>
+              <small class="text-muted">
+                <strong>
+                  Total expenses eligible for forgiveness:
+                </strong>
+              </small >
             </td>
             <td>
               <strong>
@@ -49,7 +71,11 @@
             </strong>
             </td>
           </tr>
-
+          <tr>
+            <th colspan="2">
+              Forgiveness Reduction
+            </th>
+          </tr>
           <%= integer_input(form, :avg_of_ftes_mo_between_feb_june_of_2019) %>
           <%= integer_input(form, :avg_of_ftes_mo_in_first_2mos_post_loan_origination) %>
           <%= integer_input(form, :n_salary_reductions_for_ftes_making_gt_100k) %>
@@ -57,9 +83,11 @@
           <%= dollar_input(form, :avg_salary_across_impacted_ftes_post_reduction) %>
           <tr>
             <td>
-              <strong>
-                Total reduction in forgiveness amount:
-              </strong>
+              <small class="text-muted">
+                <strong>
+                  Total reduction in forgiveness amount:
+                </strong>
+              </small >
             </td>
             <td>
               <strong>
