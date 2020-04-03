@@ -7,7 +7,7 @@ module CalculatorHelper
         concat(content_tag(:div, class: "input-group-prepend") do
           concat(('  <div class="input-group-text">' + input_prepend + '</div>').html_safe)
         end)
-        concat(form.number_field(var, class: "form-control", value: (@calc.vars[var].to_i)))
+        concat(form.number_field(var, class: "form-control", value: (@calc.vars[var].to_i), onchange: 'this.form.submit();'))
       end)
     end.html_safe
   end

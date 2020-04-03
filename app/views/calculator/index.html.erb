@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col">
       <%= bootstrap_card(title: "Inputs") do %>
-        <%= form_with(url: {action: :index}, data: {remote: false}, method: "get", onchange: 'this.form.submit();') do |form|%>
+        <%= form_with(url: {action: :index}, data: {remote: false}, method: "get", onchange: 'this.submit();') do |form|%>
         <%= bootstrap_table(class: "table") do %>
           <%= dollar_input(form, :avg_total_monthly_payroll) %>
           <%= integer_input(form, :n_employees_making_gt_100k) %>
