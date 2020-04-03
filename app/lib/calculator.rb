@@ -1,27 +1,71 @@
 class Calculator
   def initialize vars
     @vars = vars
+    self.class.variables.each do |var, info|
+      if !@vars.has_key? var
+        @vars[var] = info[:default_value]
+      end
+    end
   end
 
   def multiplier
     2.5 ## fixed? cell E11
   end
+
   def self.variables
     {
-      avg_total_monthly_payroll: "Avg. total monthly payroll, incl. contractors (1),(2)",
-      n_employees_making_gt_100k: "# of employees making >$100k annually",
-      avg_annual_comp_across_gt_100k_employees: "Avg. annual comp across >$100k/yr employees",
-      n_contractors_making_gt_8300_mo: "# of contractors making >$8.3k monthly",
-      avg_monthly_comp_across_gt_8300_mo_contractors: "Avg. monthly comp across >$8.3k/mo contractors",
-      avg_monthly_payroll_in_first_2mos_post_loan_origination: "Avg. monthly payroll in first 2mo's post loan origination",
-      avg_monthly_rent_or_mortgage_in_first_2mos: "Avg. monthly rent or mortgage in first 2mo's",
-      avg_monthly_utilities_in_first_2mos: "Avg. monthly utilities in first 2mo's (3)",
-      eligible_expenses_8_weeks: "8-weeks worth of eligible expenses",
-      avg_of_ftes_mo_between_feb_june_of_2019: "Avg. # of FTEs/mo between Feb-June of 2019",
-      avg_of_ftes_mo_in_first_2mos_post_loan_origination: "Avg. # of FTEs/mo in first 2mo's post loan origination",
-      n_salary_reductions_for_ftes_making_gt_100k: "# of salary reductions for FTEs making <$100k",
-      avg_salary_across_impacted_ftes_pre_reduction: "Avg. salary across impacted FTEs pre-reduction",
-      avg_salary_across_impacted_ftes_post_reduction: "Avg. salary across impacted FTEs post-reduction",
+      avg_total_monthly_payroll: {
+        :description => "Avg. total monthly payroll, incl. contractors (1),(2)",
+        :default_value => 85000
+      },
+      n_employees_making_gt_100k: {
+        :description => "# of employees making >$100k annually",
+        :default_value => 4
+      },
+      avg_annual_comp_across_gt_100k_employees: {
+        :description => "Avg. annual comp across >$100k/yr employees",
+        :default_value => 120000
+      },
+      n_contractors_making_gt_8300_mo: {
+        :description => "# of contractors making >$8.3k monthly",
+        :default_value => 1
+      },
+      avg_monthly_comp_across_gt_8300_mo_contractors: {
+        :description => "Avg. monthly comp across >$8.3k/mo contractors",
+        :default_value => 10000
+      },
+      avg_monthly_payroll_in_first_2mos_post_loan_origination: {
+        :description => "Avg. monthly payroll in first 2mo's post loan origination",
+        :default_value => 75000
+      },
+      avg_monthly_rent_or_mortgage_in_first_2mos: {
+        :description => "Avg. monthly rent or mortgage in first 2mo's",
+        :default_value => 4000
+      },
+      avg_monthly_utilities_in_first_2mos: {
+        :description => "Avg. monthly utilities in first 2mo's (3)",
+        :default_value => 1000
+      },
+      avg_of_ftes_mo_between_feb_june_of_2019: {
+        :description => "Avg. # of FTEs/mo between Feb-June of 2019",
+        :default_value => 10
+      },
+      avg_of_ftes_mo_in_first_2mos_post_loan_origination: {
+        :description => "Avg. # of FTEs/mo in first 2mo's post loan origination",
+        :default_value => 9
+      },
+      n_salary_reductions_for_ftes_making_gt_100k: {
+        :description => "# of salary reductions for FTEs making <$100k",
+        :default_value => 2
+      },
+      avg_salary_across_impacted_ftes_pre_reduction: {
+        :description => "Avg. salary across impacted FTEs pre-reduction",
+        :default_value => 80000
+      },
+      avg_salary_across_impacted_ftes_post_reduction: {
+        :description => "Avg. salary across impacted FTEs post-reduction",
+        :default_value => 55000
+      },
     }
   end
 
@@ -87,8 +131,7 @@ class Calculator
       @vars[:avg_of_ftes_mo_in_first_2mos_post_loan_origination] < @vars[:avg_of_ftes_mo_between_feb_june_of_2019]
     )
         total = (
-          @vars[:avg_monthly_payroll_in_first_2mos_post_loan_origination] * 2
-          * (1 - @vars[:avg_of_ftes_mo_in_first_2mos_post_loan_origination] / @vars[:avg_of_ftes_mo_between_feb_june_of_2019])
+          (@vars[:avg_monthly_payroll_in_first_2mos_post_loan_origination] * 2) * (1 - @vars[:avg_of_ftes_mo_in_first_2mos_post_loan_origination] / @vars[:avg_of_ftes_mo_between_feb_june_of_2019])
         )
     else
       total = 0
@@ -99,7 +142,7 @@ class Calculator
         total = total + 0
     else
       total = total + (
-          @vars[:avg_salary_across_impacted_ftes_post_reduction] - (@vars[:avg_salary_across_impacted_ftes_pre_reduction]*.75)
+          @vars[:avg_salary_across_impacted_ftes_post_reduction] - (@vars[:avg_salary_across_impacted_ftes_pre_reduction]*0.75)
          ) * (@vars[:n_salary_reductions_for_ftes_making_gt_100k] * -1)
     end
     return total
