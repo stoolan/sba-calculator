@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col">
       <%= bootstrap_card(title: "Inputs") do %>
-        <%= form_with(url: {action: :index}, data: {remote: false}, method: "get") do |form|%>
+        <%= form_with(url: {action: :index}, data: {remote: false}, method: "get", onchange: 'this.form.submit();') do |form|%>
         <%= bootstrap_table(class: "table") do %>
           <%= dollar_input(form, :avg_total_monthly_payroll) %>
           <%= integer_input(form, :n_employees_making_gt_100k) %>
@@ -22,9 +22,7 @@
               </small>
             </td>
             <td>
-              <small class="text-muted">
-                2x
-              </small>
+              2x
             </td>
           </tr>
           <tr>
@@ -35,7 +33,7 @@
             </td>
             <td>
               <strong>
-              <%= number_to_currency(@calc.expenses_eligible_for_forgiveness) %>
+              <%= number_to_currency(@calc.expenses_eligible_for_forgiveness, precision: 0) %>
             </strong>
             </td>
           </tr>
@@ -53,7 +51,7 @@
             </td>
             <td>
               <strong>
-              <%= number_to_currency(@calc.total_reduction_in_forgiveness_amount) %>
+              <%= number_to_currency(@calc.total_reduction_in_forgiveness_amount, precision: 0) %>
             </strong>
             </td>
           </tr>
@@ -69,7 +67,7 @@
               Payroll Eligible for Loan Calculation
             </td>
             <td>
-              <%= number_to_currency @calc.payroll_eligible_for_loan_calculation %>
+              <%= number_to_currency @calc.payroll_eligible_for_loan_calculation, precision: 0 %>
             </td>
           </tr>
           <tr>
@@ -85,7 +83,7 @@
               Maximum Loan Size
             </td>
             <td>
-              <%= number_to_currency @calc.maximum_loan_size %>
+              <%= number_to_currency @calc.maximum_loan_size, precision: 0 %>
             </td>
           </tr>
           <tr>
@@ -93,7 +91,7 @@
               Amount Eligble for Forgiveness
             </td>
             <td>
-              <%= number_to_currency @calc.amount_eligible_for_forgiveness %>
+              <%= number_to_currency @calc.amount_eligible_for_forgiveness, precision: 0 %>
             </td>
           </tr>
           <tr>
@@ -101,7 +99,7 @@
               Final Loan Balance
             </td>
             <td>
-              <%= number_to_currency @calc.final_loan_balance %>
+              <%= number_to_currency @calc.final_loan_balance, precision: 0 %>
             </td>
           </tr>
           <tr>
@@ -109,7 +107,7 @@
               Monthly Loan Payments
             </td>
             <td>
-              <%= number_to_currency @calc.monthly_loan_payments %>
+              <%= number_to_currency @calc.monthly_loan_payments, precision: 0 %>
             </td>
           </tr>
           <tr>
@@ -117,7 +115,7 @@
               Total Loan Payments
             </td>
             <td>
-              <%= number_to_currency @calc.total_loan_payments %>
+              <%= number_to_currency @calc.total_loan_payments, precision: 0 %>
             </td>
           </tr>
           <tr>
@@ -125,7 +123,7 @@
               Total Interest Paid
             </td>
             <td>
-              <%= number_to_currency @calc.total_interest_paid %>
+              <%= number_to_currency @calc.total_interest_paid, precision: 0 %>
             </td>
           </tr>
         <% end %>

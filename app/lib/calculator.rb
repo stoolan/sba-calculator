@@ -7,6 +7,9 @@ class Calculator
         @vars[var] = info[:default_value]
       end
     end
+    @vars.each do |key, value|
+      @vars[key] = value.to_f # coerce to float
+    end
   end
 
   def multiplier
@@ -123,11 +126,12 @@ class Calculator
   end
 
   def total_interest_paid
-    final_loan_balance - total_loan_payments
+    final_loan_balance + total_loan_payments
   end
 
 
   def total_reduction_in_forgiveness_amount
+    # binding.pry
     if (
       @vars[:avg_of_ftes_mo_in_first_2mos_post_loan_origination] < @vars[:avg_of_ftes_mo_between_feb_june_of_2019]
     )
