@@ -1,4 +1,5 @@
 class Calculator
+  attr_accessor :vars
   def initialize vars
     @vars = vars
     self.class.variables.each do |var, info|
@@ -114,7 +115,7 @@ class Calculator
   def monthly_loan_payments
     rate = 0.04/12
     pv = final_loan_balance
-    return (pv*rate) / (1 - (1 + rate)^(-n_loan_payments)) * -1
+    return (pv*rate) / (1 - (1 + rate)**(-n_loan_payments)) * -1
   end
 
   def total_loan_payments
